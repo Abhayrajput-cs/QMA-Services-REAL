@@ -1,0 +1,47 @@
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Abhay@1234
+      MYSQL_DATABASE: quantitydb
+    ports:
+      - "3307:3306"
+
+  eureka:
+    build: ./Eureka-Registry
+    container_name: eureka
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+      - eureka
+
+  quantity-service:
+    build: ./Quantity-Measurement
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+      - eureka
+
+  history-service:
+    build: ./history-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql
+      - eureka
