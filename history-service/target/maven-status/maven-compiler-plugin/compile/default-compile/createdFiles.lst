@@ -1,0 +1,7 @@
+com\example\service\HistoryService.class
+com\example\controller\HistoryController.class
+com\example\entity\QuantityMeasurementEntity.class
+com\example\dto\HistoryRequestDTO.class
+com\example\repository\HistoryRepository.class
+com\example\exceptions\GlobalExceptionHandler.class
+com\example\HistoryServiceApplication.class

@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+
+        - id: oauth2
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/oauth2/**,/login/**
+
+        - id: quantity-service
+          uri: lb://MEASUREMENT-SERVICE
+          predicates:
+            - Path=/api/v1/quantities/**
+
+        - id: history-service
+          uri: lb://HISTORY-SERVICE
+          predicates:
+            - Path=/api/v1/history/**
+
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
